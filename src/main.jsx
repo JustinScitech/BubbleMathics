@@ -7,9 +7,8 @@ import ResultsPage from './pages/ResultsPage.jsx';
 import { AuthProvider } from "@propelauth/react";
 import './index.css'
 
-const authUrl = "https://8665905.propelauthtest.com"
-
-//process.env.REACT_APP_AUTH_URL;
+const authUrl = import.meta.env.VITE_PROPEL_APP_AUTH_URL;
+console.log('Auth URL:', authUrl);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
