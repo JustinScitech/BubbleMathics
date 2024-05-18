@@ -54,7 +54,7 @@ function LoginPage() {
           <div className="alert-dialog-content">
             <div className="alert-dialog-header">Message</div>
             <div className="alert-dialog-body">{message}</div>
-            <div className="alert-dialog-footer">
+            <div className="alert-diljkkjbalog-footer">
               <button onClick={() => setMsgOpen(false)}>Close</button>
             </div>
           </div>
