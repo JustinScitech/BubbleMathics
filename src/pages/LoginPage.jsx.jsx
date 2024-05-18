@@ -1,23 +1,20 @@
 import React, { useState } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { useAuth, useRedirectFunctions } from "@propelauth/react";
+import { Link as RouterLink } from "react-router-dom";
+import { useRedirectFunctions } from "@propelauth/react";
 import "../App.css";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const { redirectToLoginPage } = useRedirectFunctions();
-  const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [isMsgOpen, setMsgOpen] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await redirectToLoginPage({ email });
-      setMessage("Successfully logged in!");
+      redirectToLoginPage({ email });
+      setMessage("Redirecting to login page...");
       setMsgOpen(true);
-      navigate("/lesson");
     } catch (error) {
       setMessage(`Login error: ${error.message}`);
       setMsgOpen(true);
@@ -41,17 +38,6 @@ function LoginPage() {
               required
             />
           </div>
-          <div className="form-control">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              placeholder="********"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
           <button type="submit" className="login-button">
             LOG IN
           </button>
@@ -66,7 +52,7 @@ function LoginPage() {
       {isMsgOpen && (
         <div className="alert-dialog">
           <div className="alert-dialog-content">
-            <div className="alert-dialog-header">ERROR</div>
+            <div className="alert-dialog-header">Message</div>
             <div className="alert-dialog-body">{message}</div>
             <div className="alert-dialog-footer">
               <button onClick={() => setMsgOpen(false)}>Close</button>
