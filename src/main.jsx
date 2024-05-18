@@ -1,11 +1,26 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import MathPage from './pages/MathPage.jsx';
+import ResultsPage from './pages/ResultsPage.jsx';
+import { AuthProvider } from "@propelauth/react";
 import './index.css'
+
+const authUrl = process.env.REACT_APP_AUTH_URL;
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
-
+    <AuthProvider authUrl={authUrl}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/results" element={<ResultsPage />} />
+        <Route path="/compete" element={<MathPage />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </BrowserRouter>
+    </AuthProvider>
   </React.StrictMode>,
 )
