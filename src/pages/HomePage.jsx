@@ -34,13 +34,11 @@ const HomePage = withAuthInfo((props) => {
       <div className="topnav">
         <ul>
           <li><a href="/" id='navLogo'><img className="logo" src="/logo_light.png" alt="Logo" /></a></li>
-          <li><a href="/challenges" id='challengesNav'>Challenges</a></li>
+          <li><a href="/compete" id='challengesNav'>Challenges</a></li>
           <li><a href="/results" id="resultsNav">Results</a></li>
-          <li><a href="/leaderboard" id="leaderboardNav">Leaderboard</a></li>
           {props.isLoggedIn ? (
             <li>
-              {props.user.email} 
-              <button onClick={() => redirectToAccountPage()}>Account</button>
+              <button onClick={() => redirectToAccountPage()}>{props.user.email}</button>
               <button onClick={() => logoutFunction(true)}>Logout</button>
             </li>
           ) : (
