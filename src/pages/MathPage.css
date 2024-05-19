@@ -53,6 +53,36 @@ body {
     box-shadow: 0 0 0 4px #1d4ed8;
 }
 
+.option-button.correct {
+    background-color: #22c55e; /* Green color for correct answer */
+    box-shadow: 0 0 0 4px #16a34a;
+    position: relative;
+}
+
+.correct::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+    background-image: url('confetti.png'); /* Add a confetti image */
+    background-size: cover;
+    animation: confetti 1s ease-out forwards;
+}
+
+@keyframes confetti {
+    from {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-150%) scale(0.5);
+    }
+}
+
 .navigation-buttons {
     display: flex;
     justify-content: space-between;
