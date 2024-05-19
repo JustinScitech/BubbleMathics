@@ -5,21 +5,23 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import http from 'http';
 import { Server } from 'socket.io';
+import cors from 'cors'; // Import cors
 
-
+// Convert import.meta.url to __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Specify the path to the .env file
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const ATLAS_URI = process.env.ATLAS_URI;
-const PORT = process.env.PORT || 5050;
+const PORT = process.env.PORT || 8000; // Ensure this matches the port used in your frontend
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3000', // Update this to match your frontend URL
+    origin: ['http://localhost:5173', 'http://localhost:5050'],
     methods: ['GET', 'POST']
   }
 }); // Initialize Socket.io server
@@ -33,12 +35,17 @@ async function connectToDatabase() {
   try {
     await client.connect();
     console.log('Connected to MongoDB!');
-    db = client.db('bubble_db');
+    db = client.db('bubbleMath');
   } catch (err) {
     console.error(err);
     process.exit(1);
   }
 }
+
+// Use CORS middleware
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:5050'], // Allow multiple origins if needed
+}));
 
 app.use(express.json());
 
@@ -46,12 +53,11 @@ app.get('/', (req, res) => {
   res.send('Welcome to BubbleMath API');
 });
 
-app.get('/collection/:name', async (req, res) => {
-  const collectionName = req.params.name;
+app.get('/questions', async (req, res) => {
   try {
-    const collection = db.collection(collectionName);
-    const documents = await collection.find({}).toArray();
-    res.json(documents);
+    const collection = db.collection('questions');
+    const questions = await collection.find({}).toArray();
+    res.json(questions);
   } catch (err) {
     res.status(500).send(err.toString());
   }
