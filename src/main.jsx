@@ -9,6 +9,7 @@ import './index.css'
 
 const authUrl = import.meta.env.VITE_PROPEL_APP_AUTH_URL;
 console.log('Auth URL:', authUrl);
+console.log(authUrl)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

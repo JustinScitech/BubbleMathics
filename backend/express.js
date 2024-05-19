@@ -1,12 +1,28 @@
-const express = require('express');
-const { MongoClient } = require('mongodb');
+import express from 'express';
+import { MongoClient } from 'mongodb';
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Convert import.meta.url to __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Specify the path to the .env file
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
+const ATLAS_URI =  process.env.ATLAS_URI;
+const PORT = process.env.PORT;
+
+console.log("ATLAS_URI = ", ATLAS_URI)
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 let db;
 
 async function connectToDatabase() {
-    const uri = "mongodb://localhost:27017";
+    // const uri = "mongodb+srv://user:bubbleiscool@bubblemath.9skx2dm.mongodb.net/?retryWrites=true&w=majority&appName=bubbleMath";
+    const uri = ATLAS_URI;
+    
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
     try {
@@ -50,6 +66,6 @@ app.post('/collection/:name', async (req, res) => {
 
 connectToDatabase().then(() => {
     app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
+        console.log(`Express Server is running on port ${PORT}`);
     });
 });
