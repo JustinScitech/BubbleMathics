@@ -1,0 +1,113 @@
+/* HomePage.css */
+
+.topnav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: var(--global-bg2);
+    overflow: hidden;
+    z-index: 1000;
+    /* Ensure the navbar is above other elements */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    /* Add padding to the left and right */
+}
+
+.topnav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    /* Center items vertically */
+    width: 100%;
+}
+
+.topnav li {
+    display: flex;
+}
+
+.topnav a {
+    display: block;
+    text-align: center;
+    padding: 1rem;
+    text-decoration: none;
+    font-size: 1.0625rem;
+}
+
+#navLogo {
+    padding: 0;
+    margin-right: auto;
+    /* Push other items to the right */
+}
+
+.logo {
+    height: 40px;
+    /* Adjust the height of the logo */
+    width: auto;
+    /* Maintain aspect ratio */
+}
+
+#challengesNav {
+    text-decoration: none;
+    color: var(--darkBlue);
+}
+
+#challengesNav:hover {
+    background-color: var(--lightBlue);
+    color: var(--global-bg);
+}
+
+#resultsNav {
+    text-decoration: none;
+    color: var(--darkGreen);
+}
+
+#resultsNav:hover {
+    background-color: var(--lightGreen);
+    color: var(--global-bg);
+}
+
+#leaderboardNav {
+    text-decoration: none;
+    color: var(--darkOrange);
+}
+
+#leaderboardNav:hover {
+    background-color: var(--lightOrange);
+    color: var(--global-bg);
+}
+
+#loginNav {
+    text-decoration: none;
+    color: var(--darkRed);
+}
+
+#loginNav:hover {
+    background-color: var(--lightRed);
+    color: var(--global-bg);
+}
+
+@media screen and (max-width: 600px) {
+    .topnav a {
+        font-size: 0.875rem;
+        padding: 0.75rem;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .topnav ul {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .topnav li a {
+        font-size: 3.5vw;
+        padding: 3vw;
+    }
+}
+
+.no-scroll {
+    overflow: hidden;
+}
