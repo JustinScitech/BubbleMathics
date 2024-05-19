@@ -1,5 +1,14 @@
 /* HomePage.css */
 
+@font-face {
+    font-family: 'CustomFont'; /* Name your font family */
+    src: url('/Starborn.ttf'); /* Locate the .ttf file within your directory */
+}
+
+#mainText {
+    font-family: 'CustomFont';
+}
+
 .topnav {
     position: fixed;
     top: 0;
@@ -35,6 +44,11 @@
     padding: 1rem;
     text-decoration: none;
     font-size: 1.0625rem;
+    margin-right: 2px; /* Add 2px space between each link */
+}
+
+.topnav a:last-child {
+    margin-right: 0; /* Remove the margin from the last item */
 }
 
 #navLogo {
@@ -106,6 +120,40 @@
         font-size: 3.5vw;
         padding: 3vw;
     }
+}
+
+#login-button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: rgb(128, 182, 0);
+    cursor: pointer;
+    transition: border-color 0.25s;
+}
+
+#login-button:hover {
+    background-color: rgb(240, 230, 56);
+    border-color: rgb(128, 182, 0);
+}
+
+#signup-button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: rgb(255, 198, 0);
+    cursor: pointer;
+    transition: border-color 0.25s;
+}
+
+#signup-button:hover {
+    background-color: rgb(255, 116, 72);
+    border-color: rgb(255, 198, 0);
 }
 
 .no-scroll {

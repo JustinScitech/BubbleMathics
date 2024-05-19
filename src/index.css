@@ -12,6 +12,21 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    --global-black: rgb(39, 36, 31);
+    --orange1: rgb(255, 198, 0);
+    --red1: rgb(255, 116, 72);
+    --yellow2: rgb(251, 232, 100);
+    --orange2: rgb(255, 185, 91);
+    --green3: rgb(51, 153, 143);
+    --blue3: rgb(133, 196, 196);
+    --pink4: rgb(254, 181, 188);
+    --red4: rgb(249, 127, 129);
+    --yellow5: rgb(240, 230, 56);
+    --green5: rgb(128, 182, 0);
+    --lightblue6: rgb(52, 198, 250);
+    --darkblue6: rgb(0, 116, 211);
+    --mainText: rgb(128, 128, 128);
 }
 
 a {
@@ -37,21 +52,6 @@ h1 {
     line-height: 1.1;
 }
 
-button {
-    border-radius: 8px;
-    border: 1px solid transparent;
-    padding: 0.6em 1.2em;
-    font-size: 1em;
-    font-weight: 500;
-    font-family: inherit;
-    background-color: #1a1a1a;
-    cursor: pointer;
-    transition: border-color 0.25s;
-}
-
-button:hover {
-    border-color: #646cff;
-}
 
 button:focus,
 button:focus-visible {
