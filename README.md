@@ -1,6 +1,6 @@
-# React + Vite
+# BUBBLEMATHICS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Practice your math skills through fun and competitive games!
 
 Currently, two official plugins are available:
 
