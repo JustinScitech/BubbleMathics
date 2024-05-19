@@ -5,7 +5,7 @@ import HomePage from './pages/HomePage.jsx';
 import MathPage from './pages/MathPage.jsx';
 import ResultsPage from './pages/ResultsPage.jsx';
 import { AuthProvider } from "@propelauth/react";
-import Serverlist from './pages/Serverlist.jsx';
+import Serverlist from './pages/ServerList.jsx';
 import './index.css'
 import WaitingRoom from './pages/WaitingRoom.jsx';
 
