@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 import Leaderboard from '../Components/Leaderboard'; 
+import './ResultsPage.css'; // Import the CSS file
 
 const ResultsPage = ({ userResults }) => {
   // Default values to prevent destructuring errors
@@ -24,35 +25,35 @@ const ResultsPage = ({ userResults }) => {
   ];
 
   return (
-    <div className="container">
-      <div className="content">
+    <div className="content">
+      <div>
         <h1>Your Results</h1>
         <p>Check out how you did in your recent math battles!</p>
-        <div className="results-summary">
-          <PieChart width={400} height={400}>
-            <Pie
-              data={data}
-              cx="50%"
-              cy="50%"
-              outerRadius={150}
-              fill="#8884d8"
-              dataKey="value"
-              label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-            >
-              {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </PieChart>
-          <p>Accuracy: {accuracy.toFixed(2)}%</p>
-        </div>
-        
-        <Leaderboard leaderboard={leaderboard} />
-        
-        <button onClick={() => window.location.href='/'}>Back to Home</button>
       </div>
+      <div className="leaderboard">
+        <Leaderboard leaderboard={leaderboard} />
+      </div>
+      <div className="results-summary">
+        <PieChart width={400} height={400}>
+          <Pie
+            data={data}
+            cx="50%"
+            cy="50%"
+            outerRadius={150}
+            fill="#8884d8"
+            dataKey="value"
+            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+          >
+            {data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip />
+          <Legend />
+        </PieChart>
+        <p>Accuracy: {accuracy.toFixed(2)}%</p>
+      </div>
+      <button onClick={() => window.location.href='/'}>Back to Home</button>
     </div>
   );
 };
