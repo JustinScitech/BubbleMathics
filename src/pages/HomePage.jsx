@@ -38,13 +38,13 @@ const HomePage = withAuthInfo((props) => {
           <li><a href="/results" id="resultsNav">Results</a></li>
           {props.isLoggedIn ? (
             <li>
-              <button onClick={() => redirectToAccountPage()}>{props.user.email}</button>
-              <button onClick={() => logoutFunction(true)}>Logout</button>
+              {props.user.email} 
+              <button id="login-button" onClick={() => redirectToAccountPage()}>Account</button>
+              <button id="signup-button" onClick={() => logoutFunction(true)}>Logout</button>
             </li>
           ) : (
             <li>
-              <button onClick={() => redirectToLoginPage()}>Login</button>
-              <button onClick={() => redirectToSignupPage()}>Signup</button>
+              <button id="login-button" onClick={() => redirectToLoginPage()}>Login</button>
               </li>
           )}
         </ul>
@@ -73,9 +73,10 @@ const HomePage = withAuthInfo((props) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 2 }}
+          id="mainText"
         >
           <AnimatedText
-            sentence="Learn Through Losing"
+            sentence="Learn    By    Losing"
             styling="bg-gradient-to-b from-white via-gray-200 to-white bg-clip-text text-transparent"
           />
         </motion.h1>

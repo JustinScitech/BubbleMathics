@@ -1,0 +1,56 @@
+/* MathPage.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+    min-height: 100vh;
+    background-image: url('bg_login.png');
+    background-size: cover; /* Cover the entire viewport */
+    background-position: center; /* Center the background image */
+}
+
+.card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 75%;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.question {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #000;
+}
+
+.option-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+    gap: 1rem; /* Adjust the gap between buttons */
+}
+
+.option-button {
+    padding: 1rem;
+    background-color: #3b82f6;
+    color: white;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    width: 100%; /* Make buttons fill grid cells */
+}
+
+.option-button:hover {
+    background-color: #2563eb;
+}
+
+.option-button.selected {
+    box-shadow: 0 0 0 4px #1d4ed8;
+}

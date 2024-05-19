@@ -56,5 +56,6 @@ const MathPage = () => {
         </div>
     );
 };
+};
 
 export default MathPage;
