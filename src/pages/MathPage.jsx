@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './MathPage.css'; // Make sure to import the CSS file
 
 const MathPage = () => {
     const [questions, setQuestions] = useState([]);
@@ -47,42 +48,38 @@ const MathPage = () => {
     const currentQuestion = questions[currentQuestionIndex];
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="w-full h-full flex items-center justify-center">
-                <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
-                    <h2 className="text-2xl font-bold mb-6 text-black">{currentQuestion.question}</h2>
-                    <div className="grid grid-cols-2 gap-6">
-                        {currentQuestion.options.map((option, idx) => (
-                            <button
-                                key={idx}
-                                onClick={() => handleOptionClick(currentQuestion._id, option)}
-                                className={`p-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-400 ${
-                                    selectedOption?.questionId === currentQuestion._id && selectedOption?.optionText === option ? 'ring ring-blue-700' : ''
-                                }`}
-                            >
-                                {option}
-                            </button>
-                        ))}
-                    </div>
-                    <div className="mt-6 flex justify-between">
+            <div className="card">
+                <h2 className="question">{currentQuestion.question}</h2>
+                <div className="option-grid">
+                    {currentQuestion.options.map((option, idx) => (
                         <button
-                            onClick={handlePreviousQuestion}
-                            disabled={currentQuestionIndex === 0}
-                            className="px-4 py-2 bg-gray-300 text-gray-700 font-semibold rounded-lg shadow-md hover:bg-gray-200 disabled:opacity-50"
+                            key={idx}
+                            onClick={() => handleOptionClick(currentQuestion._id, option)}
+                            className={`option-button ${
+                                selectedOption?.questionId === currentQuestion._id && selectedOption?.optionText === option ? 'selected' : ''
+                            }`}
                         >
-                            Previous
+                            {option}
                         </button>
-                        <button
-                            onClick={handleNextQuestion}
-                            disabled={currentQuestionIndex === questions.length - 1}
-                            className="px-4 py-2 bg-gray-300 text-gray-700 font-semibold rounded-lg shadow-md hover:bg-gray-200 disabled:opacity-50"
-                        >
-                            Next
-                        </button>
-                    </div>
+                    ))}
+                </div>
+                <div className="navigation-buttons">
+                    <button
+                        onClick={handlePreviousQuestion}
+                        disabled={currentQuestionIndex === 0}
+                        className="nav-button"
+                    >
+                        Previous
+                    </button>
+                    <button
+                        onClick={handleNextQuestion}
+                        disabled={currentQuestionIndex === questions.length - 1}
+                        className="nav-button"
+                    >
+                        Next
+                    </button>
                 </div>
             </div>
-        </div>
     );
 };
 
