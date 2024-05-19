@@ -9,9 +9,9 @@ import Serverlist from './pages/Serverlist.jsx';
 import './index.css'
 import WaitingRoom from './pages/WaitingRoom.jsx';
 
-const authUrl = "https://8665905.propelauthtest.com"
-
-//process.env.REACT_APP_AUTH_URL;
+const authUrl = import.meta.env.VITE_PROPEL_APP_AUTH_URL;
+console.log('Auth URL:', authUrl);
+console.log(authUrl)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
