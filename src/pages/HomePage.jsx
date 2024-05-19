@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from "framer-motion";
 import AnimatedText from "../Components/AnimatedText.jsx";
 import { Link } from 'react-router-dom';
@@ -34,7 +33,7 @@ const HomePage = withAuthInfo((props) => {
       <div className="topnav">
         <ul>
           <li><a href="/" id='navLogo'><img className="logo" src="/logo_light.png" alt="Logo" /></a></li>
-          <li><a href="/compete" id='challengesNav'>Challenges</a></li>
+          <li><a href="/waitingroom" id='challengesNav'>Challenges</a></li>
           <li><a href="/results" id="resultsNav">Results</a></li>
           {props.isLoggedIn ? (
             <li>

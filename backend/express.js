@@ -6,7 +6,6 @@ import { fileURLToPath } from 'url';
 import cors from 'cors';  // Import cors
 import http from 'http';
 import { Server } from 'socket.io';
-import cors from 'cors'; // Import cors
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

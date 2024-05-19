@@ -9,7 +9,7 @@ import Serverlist from './pages/ServerList.jsx';
 import './index.css'
 import WaitingRoom from './pages/WaitingRoom.jsx';
 
-const authUrl = import.meta.env.VITE_PROPEL_APP_AUTH_URL;
+const authUrl = "https://8665905.propelauthtest.com";
 console.log('Auth URL:', authUrl);
 console.log(authUrl)
 
