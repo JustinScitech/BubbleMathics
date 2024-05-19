@@ -23,6 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/compete" element={<MathPage />} />
         <Route path="/servers" element={<Serverlist />} />
         <Route path="/waitingroom" element={<WaitingRoom />} />
+
       </Routes>
     </BrowserRouter>
     </AuthProvider>
