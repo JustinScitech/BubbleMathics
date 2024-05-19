@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { useRedirectFunctions } from "@propelauth/react";
-import "../App.css";
+//import "../App.css";
+import "../pages/LoginPage.css";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
