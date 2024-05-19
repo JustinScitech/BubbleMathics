@@ -39,13 +39,12 @@ const HomePage = withAuthInfo((props) => {
           <li><a href="/leaderboard" id="leaderboardNav">Leaderboard</a></li>
           {props.isLoggedIn ? (
             <li>
-              <p>Username: {props.user.email}</p>
+              {props.user.email} 
               <button onClick={() => redirectToAccountPage()}>Account</button>
               <button onClick={() => logoutFunction(true)}>Logout</button>
-              </li>
+            </li>
           ) : (
             <li>
-              <p> Please sign in</p>
               <button onClick={() => redirectToLoginPage()}>Login</button>
               <button onClick={() => redirectToSignupPage()}>Signup</button>
               </li>
@@ -79,7 +78,7 @@ const HomePage = withAuthInfo((props) => {
         >
           <AnimatedText
             sentence="Learn Through Losing"
-            styling="bg-gradient-to-b from-cyan-500 via-blue-500 to-purple-500 bg-clip-text text-transparent"
+            styling="bg-gradient-to-b from-white via-gray-200 to-white bg-clip-text text-transparent"
           />
         </motion.h1>
 
