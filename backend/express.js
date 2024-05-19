@@ -11,19 +11,15 @@ const __dirname = path.dirname(__filename);
 // Specify the path to the .env file
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-const ATLAS_URI =  process.env.ATLAS_URI;
-const PORT = process.env.PORT;
+const ATLAS_URI = process.env.ATLAS_URI
+const PORT = process.env.PORT || 3000;  // Default to port 3000 if not set
 
-console.log("ATLAS_URI = ", ATLAS_URI)
 const app = express();
-
 let db;
 
 async function connectToDatabase() {
-    // const uri = "mongodb+srv://user:bubbleiscool@bubblemath.9skx2dm.mongodb.net/?retryWrites=true&w=majority&appName=bubbleMath";
     const uri = ATLAS_URI;
-    
-    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    const client = new MongoClient(uri);
 
     try {
         await client.connect();
