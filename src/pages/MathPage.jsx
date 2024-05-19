@@ -42,7 +42,12 @@ const MathPage = () => {
         }
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return (
+        <div className="loading-overlay">
+            <div className="loader"></div>
+        </div>
+    );
+    
     if (error) return <div>Error: {error}</div>;
 
     const currentQuestion = questions[currentQuestionIndex];
