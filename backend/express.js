@@ -3,34 +3,32 @@ import { MongoClient } from 'mongodb';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import cors from 'cors';  // Import cors
+import cors from 'cors';
 import http from 'http';
 import { Server } from 'socket.io';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Specify the path to the .env file
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const ATLAS_URI = process.env.ATLAS_URI;
-const PORT = process.env.PORT || 3000; 
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: ['http://localhost:5173', 'http://localhost:5050'],
-    methods: ['GET', 'POST']
-  }
-}); // Initialize Socket.io server
+
+const io = new Server(server,{
+    cors: {
+        origin: '*',
+        methods: '*'
+    }
+});
 
 let db;
-
 async function connectToDatabase() {
-  const uri = ATLAS_URI;
-  const client = new MongoClient(uri);
-
+    const uri = ATLAS_URI;
+    const client = new MongoClient(uri);
     try {
         await client.connect();
         console.log("Connected to MongoDB!");
@@ -41,18 +39,12 @@ async function connectToDatabase() {
     }
 }
 
-// Use CORS middleware
-// app.use(cors());
-
-// Use CORS middleware
-app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5050'], // Allow multiple origins if needed
-}));
+app.use(cors());
 
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('Welcome to BubbleMath API');
+    res.send('Welcome to BubbleMath API -  ExpressJS Backend');
 });
 
 app.get('/questions', async (req, res) => {
@@ -66,38 +58,43 @@ app.get('/questions', async (req, res) => {
 });
 
 app.post('/collection/:name', async (req, res) => {
-  const collectionName = req.params.name;
-  const document = req.body;
-  try {
-    const collection = db.collection(collectionName);
-    const result = await collection.insertOne(document);
-    res.status(201).json(result.ops[0]);
-  } catch (err) {
-    res.status(500).send(err.toString());
-  }
+    const collectionName = req.params.name;
+    const document = req.body;
+    try {
+        const collection = db.collection(collectionName);
+        const result = await collection.insertOne(document);
+        res.status(201).json(result.ops[0]);
+    } catch (err) {
+        res.status(500).send(err.toString());
+    }
 });
 
-// Socket.io connection handling
-let waitingUsers = [];
+let waitingUsers = [[], [], []];
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+    console.log('[*] a user connected');
 
-  socket.on('joinRoom', () => {
-    const userId = socket.id;
-    waitingUsers.push(userId);
-    io.emit('waitingUsersUpdate', waitingUsers);
-  });
+    socket.on('joinRoom', (lobbyIndex) => {
+        const userId = socket.id;
+        waitingUsers[lobbyIndex].push(userId);
+        io.emit('waitingUsersUpdate', waitingUsers);
 
-  socket.on('disconnect', () => {
-    waitingUsers = waitingUsers.filter((user) => user !== socket.id);
-    io.emit('waitingUsersUpdate', waitingUsers);
-    console.log('user disconnected');
-  });
+        if (lobbyIndex === 0 && waitingUsers[lobbyIndex].length === 2) {
+            io.to(waitingUsers[lobbyIndex][0]).emit('startGame');
+            io.to(waitingUsers[lobbyIndex][1]).emit('startGame');
+            waitingUsers[lobbyIndex] = [];
+        }
+    });
+
+    socket.on('disconnect', () => {
+        waitingUsers = waitingUsers.map(lobby => lobby.filter(user => user !== socket.id));
+        io.emit('waitingUsersUpdate', waitingUsers);
+        console.log('[*] user disconnected');
+    });
 });
 
 connectToDatabase().then(() => {
-  server.listen(PORT, () => {
-    console.log(`Express Server is running on port ${PORT}`);
-  });
+    server.listen(PORT, () => {
+        console.log(`Express Server is running on port ${PORT}`);
+    });
 });

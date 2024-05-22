@@ -1,69 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
-import Leaderboard from '../Components/Leaderboard'; 
-import './ResultsPage.css'; // Import the CSS file
+import { useLocation } from 'react-router-dom';
+import './ResultsPage.css';
 
-const ResultsPage = ({ userResults }) => {
-  // Default values to prevent destructuring errors
-  const { correct = 0, wrong = 0, accuracy = 0 } = userResults || {};
+const ResultsPage = () => {
+    const location = useLocation();
+    const { correctAnswers, totalQuestions } = location.state || { correctAnswers: 0, totalQuestions: 0 };
 
-  const data = [
-    { name: 'Correct', value: correct },
-    { name: 'Wrong', value: wrong }
-  ];
+    const getPerformanceMessage = () => {
+        if (correctAnswers === 0) {
+            return "Damn man, for real?";
+        } else if ((correctAnswers / totalQuestions) > 0.9) {
+            return "Now go kill some dragon with Math!";
+        }
+        return null;
+    };
 
-  const COLORS = ['#0088FE', '#FF8042'];
-
-  // Dummy leaderboard data
-  const leaderboard = [
-    { rank: 1, name: 'Player 1', score: 100 },
-    { rank: 2, name: 'Player 2', score: 90 },
-    { rank: 3, name: 'Player 3', score: 80 },
-    { rank: 4, name: 'Player 4', score: 70 },
-    { rank: 5, name: 'Player 5', score: 60 },
-  ];
-
-  return (
-    <div className="content">
-      <div>
-        <h1>Your Results</h1>
-        <p>Check out how you did in your recent math battles!</p>
-      </div>
-      <div className="leaderboard">
-        <Leaderboard leaderboard={leaderboard} />
-      </div>
-      <div className="results-summary">
-        <PieChart width={400} height={400}>
-          <Pie
-            data={data}
-            cx="50%"
-            cy="50%"
-            outerRadius={150}
-            fill="#8884d8"
-            dataKey="value"
-            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-          >
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-          <Tooltip />
-          <Legend />
-        </PieChart>
-        <p>Accuracy: {accuracy.toFixed(2)}%</p>
-      </div>
-      <button onClick={() => window.location.href='/'}>Back to Home</button>
-    </div>
-  );
-};
-
-ResultsPage.propTypes = {
-  userResults: PropTypes.shape({
-    correct: PropTypes.number,
-    wrong: PropTypes.number,
-    accuracy: PropTypes.number
-  })
+    return (
+        <div className="results-card">
+            <h2 className="results-title">Your math warrior journey</h2>
+            <p className="results-text">You nailed {correctAnswers} out of {totalQuestions} questions.</p>
+            <p className="results-text">Correct Answers: {correctAnswers}</p>
+            <p className="results-text">Wrong Answers: {totalQuestions - correctAnswers}</p>
+            <p className="performance-message">{getPerformanceMessage()}</p>
+        </div>
+    );
 };
 
 export default ResultsPage;

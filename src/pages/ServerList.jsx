@@ -1,5 +1,5 @@
 import React from 'react';
-import LobbyButton from '../Components/Lobbybutton'; // Make sure to adjust the path based on your project structure
+import LobbyButton from '../Components/Lobbybutton';
 
 const Serverlist = () => {
   // Array to hold the information of each lobby

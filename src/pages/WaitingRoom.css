@@ -1,0 +1,35 @@
+.waiting-room {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.lobby {
+  display: inline-block;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 200px;
+}
+
+.lobby h2 {
+  margin-bottom: 10px;
+}
+
+.lobby p {
+  margin-bottom: 10px;
+}
+
+.lobby button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.lobby button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

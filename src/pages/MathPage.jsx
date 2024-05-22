@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './MathPage.css'; // Make sure to import the CSS file
+import { useNavigate } from 'react-router-dom';
+import './MathPage.css';
 
 const MathPage = () => {
     const [questions, setQuestions] = useState([]);
@@ -9,11 +10,14 @@ const MathPage = () => {
     const [isCorrect, setIsCorrect] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [correctAnswers, setCorrectAnswers] = useState(0);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const response = await axios.get('http://localhost:5050/questions');
+                const response = await axios.get('https://bubblemathics.study/questions');
                 setQuestions(response.data);
                 setLoading(false);
             } catch (err) {
@@ -30,6 +34,7 @@ const MathPage = () => {
         const currentQuestion = questions[currentQuestionIndex];
         if (optionText === currentQuestion.answer) {
             setIsCorrect(true);
+            setCorrectAnswers(correctAnswers + 1);
         } else {
             setIsCorrect(false);
         }
@@ -49,6 +54,10 @@ const MathPage = () => {
             setSelectedOption(null);
             setIsCorrect(null);
         }
+    };
+
+    const handleViewResult = () => {
+        navigate('/results', { state: { correctAnswers, totalQuestions: questions.length } });
     };
 
     if (loading) return (
@@ -86,13 +95,21 @@ const MathPage = () => {
                 >
                     Previous
                 </button>
-                <button
-                    onClick={handleNextQuestion}
-                    disabled={currentQuestionIndex === questions.length - 1}
-                    className="nav-button"
-                >
-                    Next
-                </button>
+                {currentQuestionIndex < questions.length - 1 ? (
+                    <button
+                        onClick={handleNextQuestion}
+                        className="nav-button"
+                    >
+                        Next
+                    </button>
+                ) : (
+                    <button
+                        onClick={handleViewResult}
+                        className="nav-button"
+                    >
+                        View Result
+                    </button>
+                )}
             </div>
         </div>
     );

@@ -1,61 +1,55 @@
-import React, { useState } from 'react';
-import { io } from 'socket.io-client';
-import { withAuthInfo } from '@propelauth/react';
+import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
 import { useNavigate } from 'react-router-dom';
+import './WaitingRoom.css';
 
-const WaitingRoom = withAuthInfo(({ user }) => {
-  const [lobby, setLobby] = useState({ name: 'Sample Lobby', maxPlayers: 5 });
-  const [players, setPlayers] = useState([]); // Track the list of players
-  const [playerCount, setPlayerCount] = useState(0); // Track the player count
-  const [hasJoined, setHasJoined] = useState(false); // Track if the user has already joined
-  const navigate = useNavigate(); // Hook for navigation
+const socket = io('https://bubblemathics.study');
 
-  const handleJoinRoom = () => {
-    if (!hasJoined) {
-      console.log(`${user.email} has joined`);
-      setPlayers((prevPlayers) => [...prevPlayers, user.email]); // Add the current user
-      setPlayerCount((prevCount) => prevCount + 1); // Increase the player count by 1
-      setHasJoined(true); // Set the flag to true once the user joins
+const WaitingRoom = () => {
+    const [waitingUsers, setWaitingUsers] = useState([[], [], []]);
+    const [selectedLobby, setSelectedLobby] = useState(null);
+    const navigate = useNavigate();
 
-      // Simulate waiting for 2 seconds and then adding 2 other user emails
-      setTimeout(() => {
-        setPlayers((prevPlayers) => [...prevPlayers, 'user1@example.com', 'user2@example.com']);
-        setPlayerCount((prevCount) => prevCount + 2); // Increase the player count by 2
-      }, 2000);
-    }
-  };
+    useEffect(() => {
+        socket.on('connect_error', (err) => {
+            console.error('Connection error:', err);
+        });
 
-  const startGame = () => {
-    navigate('/compete');
-  }
+        socket.on('waitingUsersUpdate', (lobbies) => {
+            setWaitingUsers(lobbies);
+            lobbies.forEach((lobby, index) => {
+                if ((index === 0 && lobby.length === 2) || (index !== 0 && lobby.length >= 3 && selectedLobby === index)) {
+                    navigate('/compete');
+                }
+            });
+        });
 
-  return (
-    <div className="waiting-room">
-      <h2>Waiting Room - {lobby.name}</h2>
-      <p>Players: {playerCount}/{lobby.maxPlayers}</p>
-      <ul>
-        {players.map((player, index) => (
-          <li key={index}>{player}</li>
-        ))}
-      </ul>
-      <div className="justify-items-center">
+        return () => {
+            socket.off('waitingUsersUpdate');
+        };
+    }, [navigate, selectedLobby]);
 
-      <button
-        onClick={handleJoinRoom}
-        className="mt-6 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
-        disabled={hasJoined} // Disable the button if the user has already joined
-        >
-        {hasJoined ? 'Joined' : 'Join Waiting Room'}
-      </button>
-      <button
-        onClick={startGame}
-        className="mt-6 bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded"
-        >
-        {hasJoined ? 'Start game' : 'Waiting for players'}
-      </button>
+    const joinLobby = (lobbyIndex) => {
+        setSelectedLobby(lobbyIndex);
+        socket.emit('joinRoom', lobbyIndex);
+    };
+
+    return (
+        <div className="waiting-room">
+            <h1>Choose Your Adventure</h1>
+            {waitingUsers.map((lobby, index) => (
+                <div key={index} className="lobby">
+                    <h2>Lobby {index + 1}</h2>
+                    <p>
+                        Users: {lobby?.length ?? 0} / {index === 0 ? 2 : 3}
+                    </p>
+                    <button onClick={() => joinLobby(index)} disabled={lobby?.length >= (index === 0 ? 2 : 3)}>
+                        {lobby?.length >= (index === 0 ? 2 : 3) ? 'Lobby Full' : 'Join Lobby'}
+                    </button>
+                </div>
+            ))}
         </div>
-    </div>
-  );
-});
+    );
+};
 
 export default WaitingRoom;

@@ -4,7 +4,7 @@ body {
     box-sizing: border-box;
     font-family: 'Arial', sans-serif;
     min-height: 100vh;
-    background-image: url('bg_login.png');
+    background-image: url('/bg_login.png');
     background-size: cover; /* Cover the entire viewport */
     background-position: center; /* Center the background image */
 }
@@ -67,7 +67,7 @@ body {
     transform: translateX(-50%);
     width: 100px;
     height: 100px;
-    background-image: url('confetti.png'); /* Add a confetti image */
+    background-image: url('/confetti.gif');
     background-size: cover;
     animation: confetti 1s ease-out forwards;
 }

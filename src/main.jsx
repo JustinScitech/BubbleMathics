@@ -6,12 +6,15 @@ import MathPage from './pages/MathPage.jsx';
 import ResultsPage from './pages/ResultsPage.jsx';
 import { AuthProvider } from "@propelauth/react";
 import Serverlist from './pages/ServerList.jsx';
-import './index.css'
+import './main.css';
 import WaitingRoom from './pages/WaitingRoom.jsx';
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
-const authUrl = "https://8665905.propelauthtest.com";
-console.log('Auth URL:', authUrl);
-console.log(authUrl)
+const environment = import.meta.env.VITE_ENVIRONMENT;
+
+const authUrl = environment === "PROD"
+  ? import.meta.env.VITE_PROPEL_API_PROD
+  : import.meta.env.VITE_PROPEL_API_DEV;
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
