@@ -1,6 +1,15 @@
 .waiting-room {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
-  margin-top: 50px;
+  background: rgba(0,0,0,.5);
+  border-radius: 10px;
+  box-shadow: 0 15px 25px rgba(0,0,0,.6);
+  box-sizing: border-box;
+  padding: 40px;
+
 }
 
 .lobby {
@@ -10,10 +19,14 @@
   border: 1px solid #ccc;
   border-radius: 10px;
   width: 200px;
+  color: #f68e44;
+
 }
 
 .lobby h2 {
   margin-bottom: 10px;
+  color: #f68e44;
+
 }
 
 .lobby p {
@@ -24,7 +37,8 @@
   padding: 10px;
   border: none;
   border-radius: 5px;
-  background-color: #007bff;
+  background-color: #b79726;
+  
   color: white;
   cursor: pointer;
 }
